@@ -555,13 +555,13 @@ public class MaterialMultiAutoCompleteTextView extends AppCompatMultiAutoComplet
     origin = scaleIcon(origin);
     iconBitmaps[0] = origin.copy(Bitmap.Config.ARGB_8888, true);
     Canvas canvas = new Canvas(iconBitmaps[0]);
-    canvas.drawColor(baseColor & 0x00ffffff | (Colors.isLight(baseColor) ? 0xff000000 : 0x8a000000), PorterDuff.Mode.SRC_IN);
+    canvas.drawColor(baseColor , PorterDuff.Mode.SRC_IN);
     iconBitmaps[1] = origin.copy(Bitmap.Config.ARGB_8888, true);
     canvas = new Canvas(iconBitmaps[1]);
     canvas.drawColor(primaryColor, PorterDuff.Mode.SRC_IN);
     iconBitmaps[2] = origin.copy(Bitmap.Config.ARGB_8888, true);
     canvas = new Canvas(iconBitmaps[2]);
-    canvas.drawColor(baseColor & 0x00ffffff | (Colors.isLight(baseColor) ? 0x4c000000 : 0x42000000), PorterDuff.Mode.SRC_IN);
+    canvas.drawColor(baseColor , PorterDuff.Mode.SRC_IN);
     iconBitmaps[3] = origin.copy(Bitmap.Config.ARGB_8888, true);
     canvas = new Canvas(iconBitmaps[3]);
     canvas.drawColor(errorColor, PorterDuff.Mode.SRC_IN);
@@ -944,7 +944,7 @@ public class MaterialMultiAutoCompleteTextView extends AppCompatMultiAutoComplet
 
   private void resetTextColor() {
     if (textColorStateList == null) {
-      textColorStateList = new ColorStateList(new int[][]{new int[]{android.R.attr.state_enabled}, EMPTY_STATE_SET}, new int[]{baseColor & 0x00ffffff | 0xdf000000, baseColor & 0x00ffffff | 0x44000000});
+      textColorStateList = new ColorStateList(new int[][]{new int[]{android.R.attr.state_enabled}, EMPTY_STATE_SET}, new int[]{baseColor , baseColor });
       setTextColor(textColorStateList);
     } else {
       setTextColor(textColorStateList);
@@ -969,7 +969,7 @@ public class MaterialMultiAutoCompleteTextView extends AppCompatMultiAutoComplet
 
   private void resetHintTextColor() {
     if (textColorHintStateList == null) {
-      setHintTextColor(baseColor & 0x00ffffff | 0x44000000);
+      setHintTextColor(baseColor );
     } else {
       setHintTextColor(textColorHintStateList);
     }
@@ -1309,7 +1309,7 @@ public class MaterialMultiAutoCompleteTextView extends AppCompatMultiAutoComplet
         paint.setColor(errorColor);
         canvas.drawRect(startX, lineStartY, endX, lineStartY + getPixel(2), paint);
       } else if (!isEnabled()) { // disabled
-        paint.setColor(underlineColor != -1 ? underlineColor : baseColor & 0x00ffffff | 0x44000000);
+        paint.setColor(underlineColor != -1 ? underlineColor : baseColor );
         float interval = getPixel(1);
         for (float xOffset = 0; xOffset < getWidth(); xOffset += interval * 3) {
           canvas.drawRect(startX + xOffset, lineStartY, startX + xOffset + interval, lineStartY + getPixel(1), paint);
@@ -1318,7 +1318,7 @@ public class MaterialMultiAutoCompleteTextView extends AppCompatMultiAutoComplet
         paint.setColor(primaryColor);
         canvas.drawRect(startX, lineStartY, endX, lineStartY + getPixel(2), paint);
       } else { // normal
-        paint.setColor(underlineColor != -1 ? underlineColor : baseColor & 0x00ffffff | 0x1E000000);
+        paint.setColor(underlineColor != -1 ? underlineColor : baseColor );
         canvas.drawRect(startX, lineStartY, endX, lineStartY + getPixel(1), paint);
       }
     }
@@ -1330,7 +1330,7 @@ public class MaterialMultiAutoCompleteTextView extends AppCompatMultiAutoComplet
 
     // draw the characters counter
     if ((hasFocus() && hasCharactersCounter()) || !isCharactersCountValid()) {
-      textPaint.setColor(isCharactersCountValid() ? (baseColor & 0x00ffffff | 0x44000000) : errorColor);
+      textPaint.setColor(isCharactersCountValid() ? (baseColor ) : errorColor);
       String charactersCounterText = getCharactersCounterText();
       canvas.drawText(charactersCounterText, isRTL() ? startX : endX - textPaint.measureText(charactersCounterText), lineStartY + bottomSpacing + relativeHeight, textPaint);
     }
@@ -1338,7 +1338,7 @@ public class MaterialMultiAutoCompleteTextView extends AppCompatMultiAutoComplet
     // draw the bottom text
     if (textLayout != null) {
       if (tempErrorText != null || ((helperTextAlwaysShown || hasFocus()) && !TextUtils.isEmpty(helperText))) { // error text or helper text
-        textPaint.setColor(tempErrorText != null ? errorColor : helperTextColor != -1 ? helperTextColor : (baseColor & 0x00ffffff | 0x44000000));
+        textPaint.setColor(tempErrorText != null ? errorColor : helperTextColor != -1 ? helperTextColor : (baseColor ));
         canvas.save();
         if (isRTL()) {
           canvas.translate(endX - textLayout.getWidth(), lineStartY + bottomSpacing - bottomTextPadding);
@@ -1354,7 +1354,7 @@ public class MaterialMultiAutoCompleteTextView extends AppCompatMultiAutoComplet
     if (floatingLabelEnabled && !TextUtils.isEmpty(floatingLabelText)) {
       textPaint.setTextSize(floatingLabelTextSize);
       // calculate the text color
-      textPaint.setColor((Integer) focusEvaluator.evaluate(focusFraction * (isEnabled() ? 1 : 0), floatingLabelTextColor != -1 ? floatingLabelTextColor : (baseColor & 0x00ffffff | 0x44000000), primaryColor));
+      textPaint.setColor((Integer) focusEvaluator.evaluate(focusFraction * (isEnabled() ? 1 : 0), floatingLabelTextColor != -1 ? floatingLabelTextColor : (baseColor), primaryColor));
 
       // calculate the horizontal position
       float floatingLabelWidth = textPaint.measureText(floatingLabelText.toString());
